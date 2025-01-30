@@ -54,7 +54,7 @@ public class studentManagement {
     public Student getStudentByName(String name) throws IOException{
         List<Student> students  = getAllStudents();
         for(Student student : students){
-            if(student.getName() ==name){
+            if(student.getName() == name){
                 return student;
             }
         }
