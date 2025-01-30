@@ -21,8 +21,28 @@ public class Student {
         return name;
     }
 
-    public List<Integer> getGrades() { // Fix method name
+    public List<Integer> getGrades() {
         return grades;
+    }
+
+    // calculations of average grades for students
+
+    public  double calculateAverage() {
+        if (grades.isEmpty()) {
+            return 0;
+        }
+        double sum = 0;
+        for (Integer grade : grades) {
+            sum += grade;
+        }
+        return (double) sum / grades.size();
+
+    }
+
+    //overide to string method
+    @Override
+    public String toString() {
+        return "id: " + id + ", name: " + name + ", grades: " + grades+ ", average: " + calculateAverage();
     }
 }
 
