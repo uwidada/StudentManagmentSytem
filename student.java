@@ -5,11 +5,30 @@ public class Student {
     private String name;
     private List<Integer> grades;
 
-    // Constructor (must be inside the class)
+    // Constructor
     public Student(int id, String name, List<Integer> grades) {
         this.id = id;
         this.name = name;
         this.grades = grades;
+    }
+
+    // Setters
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGrades(List<Integer> grades) {
+        this.grades = grades;
+    }
+
+    public void addGrade(int grade) {
+        if (grades != null) {
+            this.grades.add(grade);
+        }
     }
 
     // Getters
@@ -25,25 +44,21 @@ public class Student {
         return grades;
     }
 
-    // calculations of average grades for students
-
-    public  double calculateAverage() {
-        if (grades.isEmpty()) {
+    // Calculate average grade
+    public double calculateAverage() {
+        if (grades == null || grades.isEmpty()) {
             return 0;
         }
         double sum = 0;
         for (Integer grade : grades) {
             sum += grade;
         }
-        return (double) sum / grades.size();
-
+        return sum / grades.size();
     }
 
-    //overide to string method
+    // Override toString method
     @Override
     public String toString() {
-        return "id: " + id + ", name: " + name + ", grades: " + grades+ ", average: " + calculateAverage();
+        return "id: " + id + ", name: " + name + ", grades: " + grades + ", average: " + calculateAverage();
     }
 }
-
-

@@ -14,7 +14,10 @@ public class Main {
             System.out.println("2. View all Students");
             System.out.println("3. Search student by ID");
             System.out.println("4. Search students by Name");
-            System.out.println("5. Exit Program");
+            System.out.println("5. delete a single student by ID");
+            System.out.println("7. Delete student by name");
+            System.out.println("8. Update student by ID");
+            System.out.println("9. Exit Program");
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
@@ -76,8 +79,43 @@ public class Main {
                         break;
 
                     case 5:
-                        System.out.println("Exiting Program...");
-                        return;
+                        System.out.println("Enter student ID: ");
+                        int studentId = sc.nextInt();
+                        Student deleteStudentById = sm.deleteStudent(studentId);
+                        if (deleteStudentById == null) {
+                            System.out.println("No student with ID " + studentId);
+                        } else {
+                            System.out.println(deleteStudentById);
+                        }
+
+                        break;
+                    case 7:
+                        System.out.print("delete student by name: ");
+                        String studentName = sc.nextLine();
+
+                        Student deleteStudentByName = sm.getStudentByName(studentName);
+
+                        if (deleteStudentByName == null) {
+                            System.out.println("No student with name " + studentName);
+                        }else {
+                            System.out.println(deleteStudentByName);
+                        }
+                        break;
+                    case 8:
+                        System.out.print("update student by by id: ");
+                        int sstudentId = sc.nextInt();
+
+                        Student updateStudent = sm.getStudent(sstudentId);
+                        if (updateStudent == null) {
+                            System.out.println("No student with ID " + sstudentId);
+                        }else {
+                            System.out.println(updateStudent);
+                        }
+                        break;
+
+                    case 9:
+                        System.out.println("Exit Program");
+                        break;
 
                     default:
                         System.out.println("Invalid choice! Please enter a number between 1 and 5.");

@@ -60,6 +60,39 @@ public class studentManagement {
         }
         return null;
     }
+
+    // delete a student by id
+    public Student deleteStudent(int id) throws IOException{
+        List<Student> students = getAllStudents();
+        for(Student student : students){
+            if(student.getId() == id){
+                students.remove(student);
+            }
+        }
+        return null;
+    }
+
+    // delete  student by id
+    public void deleteStudentByName(String name) throws IOException{
+        List<Student> students = getAllStudents();
+        for(Student student :students){
+            if(student.getName() == name){
+                students.remove(student);
+            }
+        }
+    }
+
+    // update student by id
+    public void updateStudent(Student student) throws IOException{
+        List<Student> students = getAllStudents();
+        for(Student student1 : students){
+            if(student1.getId() == student.getId()){
+                student1.setName(student.getName());
+                student1.setGrades(student.getGrades());
+                break;
+            }
+        }
+    }
 }
 
 
