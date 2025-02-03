@@ -6,124 +6,95 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
-        studentManagement sm = new studentManagement();
+        StudentManagement sm = new StudentManagement();
 
         while (true) {
             System.out.println("\n Student Management System");
             System.out.println("1. Add Student");
             System.out.println("2. View all Students");
-            System.out.println("3. Search student by ID");
-            System.out.println("4. Search students by Name");
-            System.out.println("5. delete a single student by ID");
-            System.out.println("7. Delete student by name");
-            System.out.println("8. Update student by ID");
-            System.out.println("9. Exit Program");
+            System.out.println("3. Search Student by ID");
+            System.out.println("4. Search Student by Name");
+            System.out.println("5. Delete Student by ID");
+            System.out.println("6. Delete Student by Name");
+            System.out.println("7. Update Student by ID");
+            System.out.println("8. Exit Program");
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
             sc.nextLine();
 
-            try {
-                switch (choice) {
-                    case 1:
-                        System.out.print("Enter student ID: ");
-                        int id = sc.nextInt();
-                        sc.nextLine();
-                        System.out.print("Enter student name: ");
-                        String name = sc.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter student ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter student name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter student grades (comma-separated): ");
+                    String gradesInput = sc.nextLine();
+                    List<Integer> grades = new ArrayList<>();
 
-                        System.out.print("Enter student grades (separate them with comma):");
-                        String gradesInput = sc.nextLine();
-                        List<Integer> grades = new ArrayList<>();
+                    for (String gradeStr : gradesInput.split(",")) {
+                        grades.add(Integer.parseInt(gradeStr.trim()));
+                    }
 
-                        for (String gradeStr : gradesInput.split(",")) {
-                            grades.add(Integer.parseInt(gradeStr.trim()));
-                        }
+                    sm.addStudent(new Student(id, name, grades));
+                    System.out.println("Student added successfully!");
+                    break;
 
-                        sm.addStudent(new Student(id, name, grades));
-                        System.out.println("Student added successfully!");
-                        break;
+                case 2:
+                    List<Student> students = sm.getAllStudents();
+                    if (students.isEmpty()) {
+                        System.out.println("No students found.");
+                    } else {
+                        students.forEach(System.out::println);
+                    }
+                    break;
 
-                    case 2:
-                        List<Student> students = sm.getAllStudents();
-                        if (students.isEmpty()) {
-                            System.out.println("No students found.");
-                        } else {
-                            students.forEach(System.out::println);
-                        }
-                        break;
+                case 3:
+                    System.out.print("Enter student ID: ");
+                    Student student = sm.getStudent(sc.nextInt());
+                    System.out.println(student != null ? student : "No student found.");
+                    break;
 
-                    case 3:
-                        System.out.print("Enter student ID: ");
-                        int searchId = sc.nextInt();
-                        sc.nextLine();
-                        Student foundStudent = sm.getStudent(searchId);
+                case 4:
+                    System.out.print("Enter student name: ");
+                    Student studentByName = sm.getStudentByName(sc.nextLine());
+                    System.out.println(studentByName != null ? studentByName : "No student found.");
+                    break;
 
-                        if (foundStudent == null) {
-                            System.out.println("No student found with ID " + searchId);
-                        } else {
-                            System.out.println(foundStudent);
-                        }
-                        break;
+                case 5:
+                    System.out.print("Enter student ID to delete: ");
+                    System.out.println(sm.deleteStudent(sc.nextInt()) ? "Student deleted." : "Student not found.");
+                    break;
 
-                    case 4:
-                        System.out.print("Enter student name: ");
-                        String searchName = sc.nextLine();
-                        Student foundStudents = sm.getStudentByName(searchName);
+                case 6:
+                    System.out.print("Enter student name to delete: ");
+                    System.out.println(sm.deleteStudentByName(sc.nextLine()) ? "Student deleted." : "Student not found.");
+                    break;
 
-                        if (foundStudents == null) {
-                            System.out.println("No students found with name " + searchName);
-                        } else {
-                            System.out.println(foundStudents);
-                        }
-                        break;
+                case 7:
+                    System.out.print("Enter student ID to update: ");
+                    int updateId = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter new name: ");
+                    String newName = sc.nextLine();
+                    System.out.print("Enter new grades (comma-separated): ");
+                    String newGrades = sc.nextLine();
+                    List<Integer> updatedGrades = new ArrayList<>();
+                    for (String grade : newGrades.split(",")) {
+                        updatedGrades.add(Integer.parseInt(grade.trim()));
+                    }
+                    System.out.println(sm.updateStudent(new Student(updateId, newName, updatedGrades)) ? "Student updated." : "Student not found.");
+                    break;
 
-                    case 5:
-                        System.out.println("Enter student ID: ");
-                        int studentId = sc.nextInt();
-                        Student deleteStudentById = sm.deleteStudent(studentId);
-                        if (deleteStudentById == null) {
-                            System.out.println("No student with ID " + studentId);
-                        } else {
-                            System.out.println(deleteStudentById);
-                        }
+                case 8:
+                    System.out.println("Exiting...");
+                    sc.close();
+                    return;
 
-                        break;
-                    case 7:
-                        System.out.print("delete student by name: ");
-                        String studentName = sc.nextLine();
-
-                        Student deleteStudentByName = sm.getStudentByName(studentName);
-
-                        if (deleteStudentByName == null) {
-                            System.out.println("No student with name " + studentName);
-                        }else {
-                            System.out.println(deleteStudentByName);
-                        }
-                        break;
-                    case 8:
-                        System.out.print("update student by by id: ");
-                        int sstudentId = sc.nextInt();
-
-                        Student updateStudent = sm.getStudent(sstudentId);
-                        if (updateStudent == null) {
-                            System.out.println("No student with ID " + sstudentId);
-                        }else {
-                            System.out.println(updateStudent);
-                        }
-                        break;
-
-                    case 9:
-                        System.out.println("Exit Program");
-                        break;
-
-                    default:
-                        System.out.println("Invalid choice! Please enter a number between 1 and 5.");
-                }
-            } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter numbers only for grades.");
+                default:
+                    System.out.println("Invalid choice.");
             }
         }
     }

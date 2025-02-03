@@ -59,6 +59,6 @@ public class Student {
     // Override toString method
     @Override
     public String toString() {
-        return "id: " + id + ", name: " + name + ", grades: " + grades + ", average: " + calculateAverage();
+        return "ID: " + id + ", Name: " + name + ", Grades: " + grades + ", Average: " + calculateAverage();
     }
 }
